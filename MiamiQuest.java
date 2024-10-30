@@ -21,28 +21,27 @@ public class MiamiQuest {
 		//A loop that runs until the user prompts it to stop.
 		while (true) {
 			try {
-				System.out.println("1. Display Help menu");
+				System.out.println("'help': Display Help menu");
 				//Put other things we can do here
-				System.out.println("2. Start Game");
-				System.out.println("0. Exit the program.");
+				System.out.println("'start'. Start Game");
+				System.out.println("'stop'. Exit the program.");
 				
-				int userChoice = scanner.nextInt();
+				string userChoice = scanner.nextLine();
 
 				//This is the current implementation of the user input menu, feel free to add
 				//other choices by using else if statements and leaving the final else statement
 				//there. 
 
 				
-				if (userChoice == 1) { //Display help menu
+				if (userChoice.equalsIgnoreCase("help")) { //Display help menu
 					displayHelpMenu();
-					
-				} else if (userChoice == 0) { // Exit program
+				} else if (userChoice.equalsIgnoreCase("stop") { // Exit program
 					System.out.println("Stopping program...");
 					scanner.close();
 					return; //Stop the loop.
-				} else if (userChoice == 2) { 
+				} else if (userChoice.equalsIgnoreCase("start")) { 
 					//Input start of game logic here.
-				} else if (userChoice == 3) {
+				} else if (userChoice.equalsIgnoreCase("credits") {
 					//Other user option here.
 				} else {
 					System.out.println("Invalid choice. Please try again with a different input");
@@ -51,6 +50,7 @@ public class MiamiQuest {
 				
 			} catch (InputMismatchException e) { //This stops the loop from breaking with a typo
 				System.out.println("Invalid Input! Please enter only a number!");
+				int userChoice = scanner.nextLine(); 
 	}
 
 
