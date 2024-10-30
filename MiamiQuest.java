@@ -23,11 +23,16 @@ public class MiamiQuest {
 			try {
 				System.out.println("1. Display Help menu");
 				//Put other things we can do here
-
+				System.out.println("2. Start Game");
 				System.out.println("0. Exit the program.");
 				
 				int userChoice = scanner.nextInt();
-	
+
+				//This is the current implementation of the user input menu, feel free to add
+				//other choices by using else if statements and leaving the final else statement
+				//there. 
+
+				
 				if (userChoice == 1) { //Display help menu
 					displayHelpMenu();
 					
@@ -35,11 +40,16 @@ public class MiamiQuest {
 					System.out.println("Stopping program...");
 					scanner.close();
 					return; //Stop the loop.
+				} else if (userChoice == 2) { 
+					//Input start of game logic here.
+				} else if (userChoice == 3) {
+					//Other user option here.
 				} else {
 					System.out.println("Invalid choice. Please try again with a different input");
+
 				}
 				
-			} catch (InputMismatchException e) {
+			} catch (InputMismatchException e) { //This stops the loop from breaking with a typo
 				System.out.println("Invalid Input! Please enter only a number!");
 	}
 
