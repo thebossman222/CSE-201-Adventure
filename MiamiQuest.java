@@ -16,9 +16,31 @@ public class MiamiQuest {
     System.out.println("--------------------");
 }
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-		System.out.println("Hello World");
-		displayHelpMenu();
+		Scanner scanner = new Scanner(System.in);
+		
+		//A loop that runs until the user prompts it to stop.
+		while (true) {
+			try {
+				System.out.println("1. Display Help menu");
+				//Put other things we can do here
+
+				System.out.println("0. Exit the program.");
+				
+				int userChoice = scanner.nextInt();
+	
+				if (userChoice == 1) { //Display help menu
+					displayHelpMenu();
+					
+				} else if (userChoice == 0) { // Exit program
+					System.out.println("Stopping program...");
+					scanner.close();
+					return; //Stop the loop.
+				} else {
+					System.out.println("Invalid choice. Please try again with a different input");
+				}
+				
+			} catch (InputMismatchException e) {
+				System.out.println("Invalid Input! Please enter only a number!");
 	}
 
 
