@@ -39,6 +39,28 @@ public class MiamiQuest {
 	 public static void displayCredits() {
 	        System.out.println("You currently have " + credits + " credit points.");
 	    }
+
+
+	public static void start() {
+    Random random = new Random();
+
+    // Instantiate a Professor object
+    Professor professor = new Professor();
+
+    // Randomize professor difficulty and assign extra credit
+    String professorDifficulty = professor.randomizeDifficulty();
+    int extraCredit = professor.assignExtraCredit();
+
+    // Randomize class time (8 AM or normal time)
+    String classTime = random.nextInt(2) == 0 ? "8 AM" : "Normal";
+
+    // Display the randomized class characteristics
+    System.out.println("Class started with the following characteristics:");
+    System.out.println("Professor Difficulty: " + professorDifficulty);
+    System.out.println("Extra Credit: " + extraCredit);
+    System.out.println("Class Time: " + classTime);
+}
+
 	
 	public static void main(String[] args) {
 			Scanner scanner = new Scanner(System.in);
@@ -67,6 +89,7 @@ public class MiamiQuest {
 						
 					} else if (userChoice.equalsIgnoreCase("start")) { //start the game by randomizing professor difficulty/class time features
 						//Input start of game logic here.
+						start();
 					} else if (userChoice.equalsIgnoreCase("/credits")) { //check credits
 						displayCredits();
 					} else if (userChoice.equalsIgnoreCase("/drop")) { //drop a class
