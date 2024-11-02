@@ -41,25 +41,15 @@ public class MiamiQuest {
 	    }
 
 
-	public static void start() {
-    Random random = new Random();
+		public static void start() {
+    // Create a new Class instance, which will automatically assign a Professor and randomize attributes
+    Class currentClass = new Class();
 
-    // Instantiate a Professor object
-    Professor professor = new Professor();
-
-    // Randomize professor difficulty and assign extra credit
-    String professorDifficulty = professor.randomizeDifficulty();
-    int extraCredit = professor.assignExtraCredit();
-
-    // Randomize class time (8 AM or normal time)
-    String classTime = random.nextInt(2) == 0 ? "8 AM" : "Normal";
-
-    // Display the randomized class characteristics
+    // Display the class information
     System.out.println("Class started with the following characteristics:");
-    System.out.println("Professor Difficulty: " + professorDifficulty);
-    System.out.println("Extra Credit: " + extraCredit);
-    System.out.println("Class Time: " + classTime);
+    System.out.println(currentClass.displayClassInfo());
 }
+
 
 	
 	public static void main(String[] args) {
