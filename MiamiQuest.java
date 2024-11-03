@@ -72,6 +72,14 @@ public class MiamiQuest {
 	        }
 	}
 	
+	public static void restartGame() {
+        System.out.println("Restarting the game...");
+        credits = 0; // Reset credits
+        canDrop = true; // Reset drop option
+        canRetake = true; // Reset retake option
+        start(); // Start a new class
+    }
+	
 	public static void dropClass() {
         if (canDrop) {
             canDrop = false; // Mark that drop has been used
@@ -116,7 +124,7 @@ public class MiamiQuest {
 					} else if (userChoice.equalsIgnoreCase("/drop")) { //drop a class
 						dropClass();
 					} else if (userChoice.equalsIgnoreCase("/restart")) { //restart the game
-						//Input /restart game logic here
+						restartGame();
 					} else if (userChoice.equalsIgnoreCase("/clear")) { //clear console
 						clearConsole();
 					} else if (userChoice.equalsIgnoreCase("/retake")) { //retake an exam
