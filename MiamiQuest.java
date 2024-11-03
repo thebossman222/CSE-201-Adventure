@@ -5,26 +5,26 @@ public class MiamiQuest {
 	
 	public static void displayHelpMenu() {
 		//Main menu before game begins
-	    System.out.println("---- Help Menu ----");
-	    System.out.println("Controls:");
-	    System.out.println("- Type your answers and press Enter.");
-	    System.out.println("- Type 'help' at any time to view this menu again.");
-	    System.out.println("\nGame Rules:");
-	    System.out.println("- Earn 10 credit points to graduate.");
-	    System.out.println("- Passing a class earns you 2 credit points.");
-	    System.out.println("- Pass classes by scoring at least 6 out of 10 on finals.");
-	    System.out.println("- Bonuses and penalties affect your final exam score.");
-	    System.out.println("\nTips:");
-	    System.out.println("- Be quick on timed questions.");
-	    System.out.println("- Pay attention to class attributes.");
-	    System.out.println("- Have fun :)");
-	    System.out.println("\nCommands:");
-	    System.out.println("/drop : Drop the class, you only get 1 of these so choose wisely!");
-	    System.out.println("/credits : Check the number of credits you currently have to check your progress.");
-	    System.out.println("/restart : Restart the game and start back at freshman year, you may do this at any point throughout your game");
-	    System.out.println("/clear : Clear the console! Feel free to do this if it becomes to cluttered with text.");
-	    System.out.println("/retake : Retake an exam. You only get this option once throughout your game!");
-	    System.out.println("--------------------");
+	    System.out.println("---- Help Menu ----\n"
+				+ "Controls:\n"
+				+ "- Type your answers and press Enter.\n"
+				+ "- Type 'help' at any time to view this menu again.\n"
+				+ "Game Rules:\n"
+				+ "- Earn 10 credit points to graduate.\n"
+				+ "- Passing a class earns you 2 credit points.\n"
+				+ "- Pass classes by scoring at least 6 out of 10 on finals.\n"
+				+ "- Bonuses and penalties affect your final exam score.\n"
+				+ "Tips:\n"
+				+ "- Be quick on timed questions.\n"
+				+ "- Pay attention to class attributes.\n"
+				+ "- Have fun :)\n"
+				+ "Commands:\n"
+				+ "/drop : Drop the class, you only get 1 of these so choose wisely!\n"
+				+ "/credits : Check the number of credits you currently have to check your progress.\n"
+				+ "/restart : Restart the game and start back at freshman year, you may do this at any point throughout your game\n"
+				+ "/clear : Clear the console! Feel free to do this if it becomes to cluttered with text.\n"
+				+ "/retake : Retake an exam. You only get this option once throughout your game!\n"
+				+ "--------------------\n");
 	}
 		
 	public static void clearConsole() {
