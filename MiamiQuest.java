@@ -3,6 +3,9 @@ import java.util.Scanner;
 
 public class MiamiQuest {
 	
+    static boolean canDrop = true;
+    static boolean canRetake = true;
+	
 	public static void displayHelpMenu() {
 		//Main menu before game begins
 	    System.out.println("---- Help Menu ----\n"
@@ -28,28 +31,57 @@ public class MiamiQuest {
 	}
 		
 	public static void clearConsole() {
-        // Print new lines to simulate clearing the console
-        for (int i = 0; i < 50; i++) {
-            System.out.println();
-        }
-    }
+		System.out.println("Clearing console...");
+		for (int i = 0; i < 50; i++)
+			System.out.println();
+	}
 
 	//start credits at 0 and keep track of them with the fail/pass exam game logic and print it using this method
 	static int credits = 0; 
-	 public static void displayCredits() {
-	        System.out.println("You currently have " + credits + " credit points.");
-	    }
+	public static void displayCredits() {
+		System.out.println("You currently have " + credits + " credit points.");
+	}
 
 
-		public static void start() {
-    // Create a new Class instance, which will automatically assign a Professor and randomize attributes
-    Class currentClass = new Class();
+	public static void start() {
+		// Create a new Class instance, which will automatically assign a Professor and randomize attributes
+		Class currentClass = new Class();
 
-    // Display the class information
-    System.out.println("Class started with the following characteristics:");
-    System.out.println(currentClass.displayClassInfo());
-}
+		// Display the class information
+		System.out.println("Class started with the following characteristics:");
+		System.out.println(currentClass.displayClassInfo());
+	}
+	
+	public static void retakeExam() {
+		if(canRetake) {
+			canRetake = false;
+			System.out.println("Retaking the exam...");
+			
+			 int newScore = (int) (Math.random() * 10) + 1;
+	            System.out.println("Your new exam score is: " + newScore);
 
+	            // Check if new score meets the passing threshold
+	            if (newScore >= 6) {
+	                credits += 2; // Add credits if passed
+	                System.out.println("Congratulations! You passed the exam and earned 2 credits.");
+	            } else {
+	                System.out.println("You did not pass the exam. Better luck next time.");
+	            }
+	        } else {
+	            System.out.println("You have already used your retake option.");
+	        }
+	}
+	
+	public static void dropClass() {
+        if (canDrop) {
+            canDrop = false; // Mark that drop has been used
+            System.out.println("Dropping the class...");
+
+            start(); // Start a new class immediately or set up the game for the next class
+        } else {
+            System.out.println("You have already used your drop option.");
+        }
+    }
 
 	
 	public static void main(String[] args) {
@@ -78,18 +110,17 @@ public class MiamiQuest {
 						return; //Stop the loop.
 						
 					} else if (userChoice.equalsIgnoreCase("start")) { //start the game by randomizing professor difficulty/class time features
-						//Input start of game logic here.
 						start();
 					} else if (userChoice.equalsIgnoreCase("/credits")) { //check credits
 						displayCredits();
 					} else if (userChoice.equalsIgnoreCase("/drop")) { //drop a class
-						//Input /drop game logic here
+						dropClass();
 					} else if (userChoice.equalsIgnoreCase("/restart")) { //restart the game
 						//Input /restart game logic here
 					} else if (userChoice.equalsIgnoreCase("/clear")) { //clear console
 						clearConsole();
 					} else if (userChoice.equalsIgnoreCase("/retake")) { //retake an exam
-						//Input /retake game logic here
+						retakeExam();
 					} else {
 						System.out.println("Invalid choice. Please try again with a different input");
 
