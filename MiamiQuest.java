@@ -1,10 +1,18 @@
+/**
+ * @Class: MiamiQuest
+ * @authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
+ * @version 1.0
+ * @Written: 11/1/2024
+ * @Course: CSE 201B: Intro to Software Engineering
+ * @Purpose: The MiamiQuest class serves as the main entry point for the 
+ * MiamiQuest game. It manages the game flow, including starting classes, 
+ * handling user inputs, and tracking player credits. Players navigate through 
+ * different classes, aiming to earn enough credits to graduate.
+ */
+
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-/**
- * MiamiQuest is an interactive game where players navigate through
- * classes, exams, and earn credits to graduate.
- */
 public class MiamiQuest {
 
     static boolean canDrop = true;
