@@ -1,9 +1,18 @@
+/**
+* @Class: Professor
+ * @author Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
+ * @version 1.0
+ * @Written: 11/1/2024
+ * @Course: CSE 201B: Intro to Software Engineering
+ * @Purpose: The Professor class represents a professor in the MiamiQuest game, 
+ * including their difficulty level and extra credit attributes.
+ * This class provides methods to randomize the difficulty of the professor 
+ * and to assign extra credit based on the difficulty. The difficulty can be 
+ * either "Easy" or "Hard", affecting the gameplay.
+ */
+
 import java.util.Random;
 
-/**
- * Represents a Professor with a difficulty level and extra credit 
- * attributes that affect the gameplay in the MiamiQuest game.
- */
 public class Professor {
 
     private String difficulty;
