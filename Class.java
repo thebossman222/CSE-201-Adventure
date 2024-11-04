@@ -1,9 +1,19 @@
+/**
+ * @Class: Class
+ * @authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
+ * @version 1.0
+ * @Written: 11/1/2024
+ * @Course: CSE 201B: Intro to Software Engineering
+ * @Purpose: The Class class represents a course in the MiamiQuest game, 
+ * encompassing its scheduled time, associated professor, and difficulty level.
+ * This class allows for the creation of a class with randomized 
+ * attributes, including its time and the difficulty assigned by 
+ * a randomly generated professor. It also provides methods to 
+ * display class information and assign a professor to the class.
+ */
+
 import java.util.Random;
 
-/**
- * Represents a class with a specific time, associated professor,
- * and a difficulty level determined by the professor.
- */
 public class Class {
 
     private String time;
