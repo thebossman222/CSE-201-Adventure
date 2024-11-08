@@ -1,8 +1,12 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Player {
     private int credits;
     private int failedExams;
     private boolean canDrop;
     private boolean canRetake;
+    private List<Class> classList; // List to store registered classes
 
     // Constructor to initialize player with default values
     public Player() {
@@ -10,12 +14,15 @@ public class Player {
         this.failedExams = 0;
         this.canDrop = true; // Player can drop a class initially
         this.canRetake = true; // Player can retake an exam initially
+        this.classList = new ArrayList<>(); // Initialize the class list
     }
 
-    // Registers the player for a new class
+    // Registers the player for a new class and adds it to the class list
     public Class registerClass() {
+        Class newClass = new Class();
+        classList.add(newClass); // Add the new class to the list
         System.out.println("Class registered.");
-        return new Class(); 
+        return newClass;
     }
 
     // Checks and returns the player's current credits
@@ -23,7 +30,7 @@ public class Player {
         System.out.println("You currently have " + credits + " credits.");
         return credits;
     }
-    
+
     // Checks if the player can drop a class
     public boolean canDropClass() {
         return canDrop;
@@ -31,12 +38,13 @@ public class Player {
 
     // Allows the player to drop a class if possible
     public boolean dropClass() {
-        if (canDrop) {
+        if (canDrop && !classList.isEmpty()) {
+            classList.remove(classList.size() - 1); // Remove the most recent class
             canDrop = false; // Set canDrop to false once used
             System.out.println("Class dropped.");
             return true;
         } else {
-            System.out.println("You have already used your drop option.");
+            System.out.println("You have already used your drop option or have no classes to drop.");
             return false;
         }
     }
@@ -76,5 +84,17 @@ public class Player {
     // Getter for failed exams
     public int getFailedExams() {
         return failedExams;
+    }
+
+    // Displays all registered classes
+    public void displayClasses() {
+        if (classList.isEmpty()) {
+            System.out.println("No classes registered yet.");
+        } else {
+            System.out.println("Registered classes:");
+            for (int i = 0; i < classList.size(); i++) {
+                System.out.println("Class " + (i + 1) + ": " + classList.get(i).displayClassInfo());
+            }
+        }
     }
 }
