@@ -12,13 +12,15 @@
  * display class information and assign a professor to the class.
  */
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
-public class Class {
-
+class Class {
     private String time;
     private String professorDifficulty;
     private Professor professor; // Association with Professor
+    private List<Question> questions; // List to store questions
 
     /**
      * Constructor to initialize the Class with a new Professor instance.
@@ -28,6 +30,7 @@ public class Class {
         this.professor = new Professor(); // Assigns a new Professor
         this.professorDifficulty = professor.randomizeDifficulty(); // Sets the professor's difficulty
         this.time = randomizeClassTime(); // Sets the class time
+        this.questions = new ArrayList<>(); // Initialize the questions list
     }
 
     /**
@@ -59,5 +62,23 @@ public class Class {
         return "Class Time: " + this.time +
                "\nProfessor Difficulty: " + this.professorDifficulty +
                "\nExtra Credit: " + extraCredit;
+    }
+
+    /**
+     * Getter for the professor difficulty.
+     * 
+     * @return The difficulty of the professor.
+     */
+    public String getProfessorDifficulty() {
+        return this.professorDifficulty;
+    }
+
+    /**
+     * Getter for the questions list.
+     * 
+     * @return The list of questions for the class.
+     */
+    public List<Question> getQuestions() {
+        return this.questions;
     }
 }
