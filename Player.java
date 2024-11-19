@@ -50,9 +50,9 @@ public class Player {
     }
 
     // Allows the player to take an exam
-    public Exam takeExam() {
-        System.out.println("Starting exam.");
-        Exam exam = new Exam();
+    public Exam takeExam(Class currentClass) {
+        System.out.println("Starting exam for class: " + currentClass.displayClassInfo());
+        Exam exam = new Exam(currentClass.getQuestions(), 60); // Use class-specific questions
         exam.startExam();
         return exam;
     }
@@ -96,5 +96,20 @@ public class Player {
                 System.out.println("Class " + (i + 1) + ": " + classList.get(i).displayClassInfo());
             }
         }
+    }
+
+    // Checks if the player can graduate
+    public boolean canGraduate() {
+        int hardClasses = 0;
+        int totalClassesPassed = classList.size();
+
+        for (Class c : classList) {
+            if (c.getProfessorDifficulty().equalsIgnoreCase("Hard")) {
+                hardClasses++;
+            }
+        }
+
+        int totalExamsRequired = hardClasses * 2 + (totalClassesPassed - hardClasses);
+        return totalClassesPassed >= 4 && totalExamsRequired >= 4;
     }
 }
