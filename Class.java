@@ -39,7 +39,12 @@ class Class {
      * @return A string representing the randomized class time.
      */
     private String randomizeClassTime() {
-        return new Random().nextInt(2) == 0 ? "8 AM" : "Normal";
+        if (professorDifficulty.equalsIgnoreCase("Hard")) {
+            return "8 AM";
+        }
+        else {
+            return "Normal";
+        }
     }
 
     /**
