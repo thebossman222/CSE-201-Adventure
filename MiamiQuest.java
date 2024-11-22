@@ -1,8 +1,8 @@
 /**
  * @Class: MiamiQuest
  * @authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
- * @version 1.0
- * @Written: 11/1/2024
+ * @version 2.0
+ * @Written: 11/22/2024
  * @Course: CSE 201B: Intro to Software Engineering
  * @Purpose: The MiamiQuest class serves as the main entry point for the 
  * MiamiQuest game. It manages the game flow, including starting classes, 
@@ -82,8 +82,10 @@ public class MiamiQuest {
     }
 
     /**
-     * Main method to run the MiamiQuest game. It handles user inputs and
-     * manages the game flows
+     * Main method that runs the MiamiQuest game. It handles user inputs and
+     * manages the game flow by running a loop that will not stop until the user prompts
+     * the game to stop or wins. Uses a scanner to read inputs and throws InputMismatchException
+     * if user inputs a typo.
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -97,12 +99,14 @@ public class MiamiQuest {
         gameController.startGame();
 
         // A loop that runs until the user prompts it to stop.
+        // Each eser command is stored in userChoice until game is finished.
+        // A list of available commands are accessible with 'help'
         while (true) {
             try {
-                System.out.println("'help': Display Help menu");
+                System.out.println("'help': Display Help & Commands menu");
                 System.out.println("'start': Start Game");
                 System.out.println("'stop': Exit the program.");
-
+                
                 String userChoice = scanner.nextLine();
 
                 // Handle user input commands
@@ -114,21 +118,21 @@ public class MiamiQuest {
                     scanner.close();
                     return; // Stop the loop.
                 } else if (userChoice.equalsIgnoreCase("start")) {
-                    start(player); // Start a new class
+                    start(player); // Start a new class for player
                 } else if (userChoice.equalsIgnoreCase("/credits")) {
-                    displayCredits(player); // Check credits
+                    displayCredits(player); // Check player credits
                 } else if (userChoice.equalsIgnoreCase("/classes")) {
                     player.displayClasses(); // Display all registered classes
                 } else if (userChoice.equalsIgnoreCase("/drop")) {
                     player.dropClass(); // Drop a class through Player instance
-                    start(player); // Start a new class
+                    start(player); // Start a new class for player
                 } else if (userChoice.equalsIgnoreCase("/restart")) {
                     gameController.restartGame(); // Restart the game using
                                                   // GameController
                     player = new Player(); // Reset the player to a new instance
-                    start(player); // Start a new class
+                    start(player); // Start a new class for player
                 } else if (userChoice.equalsIgnoreCase("/clear")) {
-                    clearConsole(); // Clear console
+                    clearConsole(); // Clear console for user
                 } else if (userChoice.equalsIgnoreCase("/retake")) {
                     retakeExam(player); // Retake an exam through Player
                                         // instance
@@ -137,7 +141,7 @@ public class MiamiQuest {
                                                 // GameController
                 } else {
                     System.out.println(
-                            "Invalid choice. Please try again with a different input.");
+                            "Invalid choice. Please try again with a different input."); // Invalid input handling
                 }
 
             } catch (InputMismatchException e) {
