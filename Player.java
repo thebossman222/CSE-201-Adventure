@@ -8,7 +8,11 @@ public class Player {
     private boolean canRetake;
     private List<Class> classList; // List to store registered classes
 
-    // Constructor to initialize player with default values
+    
+    /**
+    * Constructor to initialize player with defaut values for credits, failedExams, 
+    * canDrop, canRetake, and classList. 
+    */
     public Player() {
         this.credits = 0;
         this.failedExams = 0;
@@ -16,8 +20,13 @@ public class Player {
         this.canRetake = true; // Player can retake an exam initially
         this.classList = new ArrayList<>(); // Initialize the class list
     }
-
-    // Registers the player for a new class and adds it to the class list
+    
+    /**
+    * Registers the player object for a new in game class and adds the new class
+    * to the classList
+    *
+    * @return Class the registered class 
+    */
     public Class registerClass() {
         Class newClass = new Class();
         classList.add(newClass); // Add the new class to the list
@@ -25,18 +34,30 @@ public class Player {
         return newClass;
     }
 
-    // Checks and returns the player's current credits
+    /**
+    * Checks and returns the player current credits
+    *
+    * @return int the player's current credits
+    */
     public int checkCredits() {
         System.out.println("You currently have " + credits + " credits.");
         return credits;
     }
 
-    // Checks if the player can drop a class
+    /**
+    * Checks whether or not a player can drop a class
+    *
+    * @return boolean true if player can drop class and false otherwise.
+    */
     public boolean canDropClass() {
         return canDrop;
     }
 
-    // Allows the player to drop a class if possible
+    /**
+    * Allows player to drop a class and checks if possible
+    *
+    * @return boolean true if player dropped class successfully and false otherwise
+    */
     public boolean dropClass() {
         if (canDrop && !classList.isEmpty()) {
             classList.remove(classList.size() - 1); // Remove the most recent class
@@ -49,7 +70,12 @@ public class Player {
         }
     }
 
-    // Allows the player to take an exam
+    /**
+    * Allows the player to take an exam
+    * 
+    * @param currentClass the class whose exam the user is taking
+    * @return Exam the exam to be taken.
+    */
     public Exam takeExam(Class currentClass) {
         System.out.println("Starting exam for class: " + currentClass.displayClassInfo());
         Exam exam = new Exam(currentClass.getQuestions(), 60); // Use class-specific questions
@@ -57,7 +83,11 @@ public class Player {
         return exam;
     }
 
-    // Allows the player to retake an exam if possible
+    /**
+    * Allows the player to retake an exam and checks if possible
+    *
+    * @return boolean true if exam retake is available and false otherwise
+    */
     public boolean retakeExam() {
         if (canRetake) {
             canRetake = false; // Set canRetake to false once used
@@ -71,22 +101,36 @@ public class Player {
         }
     }
 
-    // Increment credits (could be called when passing an exam)
+    // (could be called when passing an exam)
+    /**
+    * Increment player's credits 
+    *
+    * @param points the points to be added to the total player credits
+    */
     public void addCredits(int points) {
         credits += points;
     }
 
-    // Increment failed exams (could be called when failing an exam)
+    // (could be called when failing an exam)
+    /**
+    * Increases the failedExams variable
+    */
     public void incrementFailedExams() {
         failedExams++;
     }
-
-    // Getter for failed exams
+    
+    /**
+    * Simple getter method for failed exams instance variable
+    * 
+    * @return int the number of failed exams
+    */
     public int getFailedExams() {
         return failedExams;
     }
 
-    // Displays all registered classes
+    /**
+    * Displays all registred classes for user in organized way.
+    */
     public void displayClasses() {
         if (classList.isEmpty()) {
             System.out.println("No classes registered yet.");
@@ -98,7 +142,11 @@ public class Player {
         }
     }
 
-    // Checks if the player can graduate
+    /**
+    * Checks to see if player has satisfied conditions to win game (graduate)
+    *
+    * @return boolean true if player can graduate and false otherwise
+    */
     public boolean canGraduate() {
         int hardClasses = 0;
         int totalClassesPassed = classList.size();
