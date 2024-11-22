@@ -40,7 +40,7 @@ public class Professor {
      * @return The amount of extra credit, which is 2 for "Easy" and -2 for "Hard".
      */
     public int assignExtraCredit() {
-        if (randomizeDifficulty().equalsIgnoreCase("Easy")) {
+        if (difficulty.equalsIgnoreCase("Easy")) {
             this.extraCredit = 2; // Positive extra credit for easy difficulty
         } else {
             this.extraCredit = -2; // Negative extra credit for hard difficulty
