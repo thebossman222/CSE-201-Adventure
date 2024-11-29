@@ -6,13 +6,11 @@ import java.util.Collections;
 
 public class Exam {
     private List<Question> questions;
-    private int countdownTimer; // in seconds
     private int score;
 
     // Constructor to initialize exam questions and timer
     public Exam(List<Question> questions, int countdownTimer) {
         this.questions = questions;
-        this.countdownTimer = countdownTimer;
         this.score = 0;
     }
 
