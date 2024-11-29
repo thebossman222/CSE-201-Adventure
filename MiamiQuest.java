@@ -63,10 +63,22 @@ public class MiamiQuest {
      * characteristics.
      */
     public static void start(Player player) {
-        Class currentClass = player.registerClass(); // Register player for a
-                                                     // new class
-        System.out.println("Class started with the following characteristics:");
-        System.out.println(currentClass.displayClassInfo());
+        Scanner sc = new Scanner(System.in);
+        Course currentClass = player.registerCourse(); // Register player for a
+                                                       // new class
+        System.out.println("Course started with the following characteristics: \n");
+        System.out.println(currentClass.displayCourseInfo() + "\n");
+
+        System.out.println("Enter S to take the Exam: ");
+        while (true) {
+            String in = sc.nextLine();
+            if (in.equalsIgnoreCase("s")) {
+                player.takeExam();
+            } else
+                System.out.println("Try again");
+            break;
+        }
+
     }
 
     /**
