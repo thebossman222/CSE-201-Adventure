@@ -1,163 +1,218 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Player {
     private int credits;
     private int failedExams;
     private boolean canDrop;
     private boolean canRetake;
-    private List<Class> classList; // List to store registered classes
+    private List<Course> courseList;
+    private int courseNumber;
 
-    
-    /**
-    * Constructor to initialize player with defaut values for credits, failedExams, 
-    * canDrop, canRetake, and classList. 
-    */
+    // Constructor to initialize player with default values
     public Player() {
         this.credits = 0;
         this.failedExams = 0;
-        this.canDrop = true; // Player can drop a class initially
+        this.canDrop = true; // Player can drop a course initially
         this.canRetake = true; // Player can retake an exam initially
-        this.classList = new ArrayList<>(); // Initialize the class list
-    }
-    
-    /**
-    * Registers the player object for a new in game class and adds the new class
-    * to the classList
-    *
-    * @return Class the registered class 
-    */
-    public Class registerClass() {
-        Class newClass = new Class();
-        classList.add(newClass); // Add the new class to the list
-        System.out.println("Class registered.");
-        return newClass;
+        this.courseList = new ArrayList<>(); // Initialize the course list
     }
 
-    /**
-    * Checks and returns the player current credits
-    *
-    * @return int the player's current credits
-    */
-    public int checkCredits() {
+    // Registers the player for a new course and adds it to the course list
+    public Course registerCourse() {
+        this.courseNumber++;
+        Course newCourse = new Course(courseNumber);
+        courseList.add(newCourse); // Add the new course to the list
+        System.out.println("Course registered: " + newCourse.getName() + "\n");
+        return newCourse;
+    }
+
+    // Checks and returns the player's current credits
+    public int getCredits() {
         System.out.println("You currently have " + credits + " credits.");
         return credits;
     }
 
-    /**
-    * Checks whether or not a player can drop a class
-    *
-    * @return boolean true if player can drop class and false otherwise.
-    */
-    public boolean canDropClass() {
+    // Checks if the player can drop a course
+    public boolean canDrop() {
         return canDrop;
     }
 
-    /**
-    * Allows player to drop a class and checks if possible
-    *
-    * @return boolean true if player dropped class successfully and false otherwise
-    */
-    public boolean dropClass() {
-        if (canDrop && !classList.isEmpty()) {
-            classList.remove(classList.size() - 1); // Remove the most recent class
-            canDrop = false; // Set canDrop to false once used
-            System.out.println("Class dropped.");
-            return true;
+    // Allows the player to drop a course if possible
+    public boolean dropCourse() {
+        if (canDrop && !courseList.isEmpty()) {
+            displayCourses();
+            Scanner scanner = new Scanner(System.in);
+            System.out
+                    .print("Enter the number of the course you want to drop: ");
+            int courseNumber = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (courseNumber > 0 && courseNumber <= courseList.size()) {
+                Course droppedCourse = courseList.remove(courseNumber - 1);
+                canDrop = false; // Set canDrop to false once used
+                System.out
+                        .println("Course dropped: " + droppedCourse.getName());
+                return true;
+            } else {
+                System.out.println("Invalid course number.");
+                return false;
+            }
         } else {
-            System.out.println("You have already used your drop option or have no classes to drop.");
+            System.out.println(
+                    "You have already used your drop option or have no courses to drop.");
             return false;
         }
     }
 
-    /**
-    * Allows the player to take an exam
-    * 
-    * @param currentClass the class whose exam the user is taking
-    * @return Exam the exam to be taken.
-    */
-    public Exam takeExam(Class currentClass) {
-        System.out.println("Starting exam for class: " + currentClass.displayClassInfo());
-        Exam exam = new Exam(currentClass.getQuestions(), 60); // Use class-specific questions
-        exam.startExam();
-        return exam;
+    // Allows the player to drop a specific course
+    public boolean dropCourse(Course course) {
+        if (canDrop && courseList.contains(course)) {
+            courseList.remove(course);
+            canDrop = false; // Set canDrop to false once used
+            System.out.println("Course dropped: " + course.getName());
+            return true;
+        } else {
+            System.out.println(
+                    "You have already used your drop option or the course is not in your course list.");
+            return false;
+        }
     }
 
-    /**
-    * Allows the player to retake an exam and checks if possible
-    *
-    * @return boolean true if exam retake is available and false otherwise
-    */
+    public void checkCredits() {
+        System.out.println("Total credits:" + this.credits);
+    }
+
+    // Allows the player to take an exam
+    public void takeExam() {
+        if (courseList.isEmpty()) {
+            System.out.println("No courses available to take an exam.");
+            return;
+        }
+
+        displayCourses();
+        if (courseNumber > 0 && courseNumber <= courseList.size()) {
+            Course currentCourse = courseList.get(courseNumber - 1);
+            System.out.println(
+                    "Starting exam for course: " + currentCourse.getName());
+            Exam exam = new Exam();
+            boolean passed = exam.startExam(currentCourse, this);
+
+            if (passed) {
+                System.out.println("Exam passed!");
+                addCredits(3); // Add credits for passing an exam
+                currentCourse.setPassed(true); // Mark the course as passed
+            } else {
+                System.out.println("Exam failed.");
+                incrementFailedExams();
+            }
+        } else {
+            System.out.println("Invalid course number.");
+        }
+    }
+
+    // Allows the player to retake an exam if possible
     public boolean retakeExam() {
         if (canRetake) {
             canRetake = false; // Set canRetake to false once used
-            System.out.println("Retaking the exam...");
-            Exam exam = new Exam();
-            exam.startExam();
-            return true;
+            System.out.println("Retaking an exam...");
+            if (courseList.isEmpty()) {
+                System.out.println("No courses available to retake an exam.");
+                return false;
+            }
+
+            // Allow the player to choose which exam to retake
+            displayCourses();
+            Scanner scanner = new Scanner(System.in);
+            System.out.print(
+                    "Enter the number of the course you want to retake the exam for: ");
+            int courseNumber = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (courseNumber > 0 && courseNumber <= courseList.size()) {
+                Course currentCourse = courseList.get(courseNumber - 1);
+                if (currentCourse.isPassed()) {
+                    System.out.println("You have already passed this course.");
+                    return false;
+                }
+
+                System.out.println("Retaking the exam for course: "
+                        + currentCourse.getName());
+                Exam exam = new Exam();
+                boolean passed = exam.startExam(currentCourse, this);
+
+                if (passed) {
+                    System.out.println("Exam passed!");
+                    addCredits(3); // Add credits for passing an exam
+                    currentCourse.setPassed(true); // Mark the course as passed
+                } else {
+                    System.out.println("Exam failed.");
+                    incrementFailedExams();
+                }
+                return true;
+            } else {
+                System.out.println("Invalid course number.");
+                return false;
+            }
         } else {
             System.out.println("You have already used your retake option.");
             return false;
         }
     }
 
-    // (could be called when passing an exam)
-    /**
-    * Increment player's credits 
-    *
-    * @param points the points to be added to the total player credits
-    */
+    // Increments credits (called when passing an exam)
     public void addCredits(int points) {
         credits += points;
     }
 
-    // (could be called when failing an exam)
-    /**
-    * Increases the failedExams variable
-    */
+    // Increments failed exams (called when failing an exam)
     public void incrementFailedExams() {
         failedExams++;
     }
-    
-    /**
-    * Simple getter method for failed exams instance variable
-    * 
-    * @return int the number of failed exams
-    */
+
+    // Getter for failed exams
     public int getFailedExams() {
         return failedExams;
     }
 
-    /**
-    * Displays all registred classes for user in organized way.
-    */
-    public void displayClasses() {
-        if (classList.isEmpty()) {
-            System.out.println("No classes registered yet.");
+    // Getter for the course list
+    public List<Course> getCourseList() {
+        return this.courseList;
+    }
+
+    // Displays all registered courses
+    public void displayCourses() {
+        if (courseList.isEmpty()) {
+            System.out.println("No courses registered yet.");
         } else {
-            System.out.println("Registered classes:");
-            for (int i = 0; i < classList.size(); i++) {
-                System.out.println("Class " + (i + 1) + ": " + classList.get(i).displayClassInfo());
+            System.out.println("Registered courses:");
+            for (int i = 0; i < courseList.size(); i++) {
+                Course c = courseList.get(i);
+                String status = c.isPassed() ? "Passed" : "Not Passed";
+                System.out
+                        .println((i + 1) + ". " + c.getName() + " - " + status);
             }
         }
     }
 
-    /**
-    * Checks to see if player has satisfied conditions to win game (graduate)
-    *
-    * @return boolean true if player can graduate and false otherwise
-    */
+    // Checks if the player can graduate
     public boolean canGraduate() {
-        int hardClasses = 0;
-        int totalClassesPassed = classList.size();
+        int passedCourses = 0;
 
-        for (Class c : classList) {
-            if (c.getProfessorDifficulty().equalsIgnoreCase("Hard")) {
-                hardClasses++;
+        for (Course c : courseList) {
+            if (c.isPassed()) {
+                passedCourses++;
             }
         }
 
-        int totalExamsRequired = hardClasses * 2 + (totalClassesPassed - hardClasses);
-        return totalClassesPassed >= 4 && totalExamsRequired >= 4;
+        // Assuming each passed course gives 3 credits and 12 credits are needed
+        // to graduate
+        return credits >= 12 && passedCourses >= 4;
+    }
+
+    // Getter for player's ability to retake an exam
+    public boolean canRetake() {
+        return canRetake;
     }
 }
