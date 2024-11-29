@@ -109,7 +109,7 @@ public class Course {
         return "Course Name: " + this.name +
                 "\nClass Time: " + this.time +
                 "\nProfessor Difficulty: " + this.professorDifficulty +
-                "\nExtra Credit: " + extraCredit;
+                "\nExtra Credit: " + extraCredit + "\n";
     }
 
 
