@@ -198,28 +198,49 @@ public class Exam {
                 }
             }
 
-            // Prompt user for their answer
-            System.out.print("\nYour answer: ");
-            String userAnswer = scanner.nextLine().trim().toUpperCase();
+            // Loop until a valid answer is provided
+            boolean validAnswerProvided = false;
+            while (!validAnswerProvided) {
+                // Check if time has run out within the loop
+                currentTime = System.currentTimeMillis();
+                elapsedTime = (currentTime - examStartTime) / 1000; // in
+                                                                    // seconds
+                timeRemaining = timeLimitInSeconds - elapsedTime;
 
-            // Validate and check the user's answer
-            if (userAnswer.length() == 1 && userAnswer.charAt(0) >= 'A'
-                    && userAnswer.charAt(0) <= 'D') {
-                if (userAnswer.charAt(0) == correctLetter) {
-                    System.out.println("Correct!");
+                if (timeRemaining <= 0) {
+                    System.out.println("\nTime is up! The exam has ended.");
+                    break;
+                }
+
+                System.out.print("\nYour answer: ");
+                String userAnswer = scanner.nextLine().trim().toUpperCase();
+
+                // Validate and check the user's answer
+                if (userAnswer.length() == 1 && userAnswer.charAt(0) >= 'A'
+                        && userAnswer.charAt(0) <= 'D') {
+                    validAnswerProvided = true;
+                    if (userAnswer.charAt(0) == correctLetter) {
+                        System.out.println("Correct!");
+                        examScore++;
+                    } else {
+                        System.out.println("Incorrect. The correct answer was "
+                                + correctLetter + ".");
+                    }
+                } else if (userAnswer.equalsIgnoreCase("Messi")
+                        || userAnswer.equalsIgnoreCase("Mohamed")) {
+                    validAnswerProvided = true;
+                    System.out.println("Correct!"); // "Messi" and "Mohamed" are
+                                                    // always considered correct
                     examScore++;
                 } else {
-                    System.out.println("Incorrect. The correct answer was "
-                            + correctLetter + ".");
+                    System.out.println(
+                            "Invalid answer. Please enter A, B, C, or D.");
                 }
-            } else if (userAnswer.equalsIgnoreCase("Messi")
-                    || userAnswer.equalsIgnoreCase("Mohamed")) {
-                System.out.println("Correct!"); // "Messi" and "Mohamed" are
-                                                // always considered correct
-                examScore++;
-            } else {
-                System.out
-                        .println("Invalid answer. Please enter A, B, C, or D.");
+            }
+
+            // Check if time ran out during the input validation loop
+            if (timeRemaining <= 0) {
+                break;
             }
         }
 
