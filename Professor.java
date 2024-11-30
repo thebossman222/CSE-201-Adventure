@@ -39,7 +39,7 @@ public class Professor {
      * 
      * @return The amount of extra credit, which is 2 for "Easy" and -2 for "Hard".
      */
-    public int assignExtraCredit() {
+    public int getExtraCredit() {
         if (difficulty.equalsIgnoreCase("Easy")) {
             this.extraCredit = 2; // Positive extra credit for easy difficulty
         } else {
