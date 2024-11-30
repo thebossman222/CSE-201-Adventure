@@ -1,7 +1,20 @@
+
+/**
+ * @Class: Quizzes
+ * @Authors: Mohamed Lemine
+ * @Version: 1.0
+ * @Written: 11/29/2024
+ * @Course: CSE 201B: Intro to Software Engineering
+ * @Purpose: The Quizzes class handles reading questions and answers from files,
+ * generating multiple-choice options, and preparing the questions for the exams
+ * in the MiamiQuest game.
+ */
+
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 import java.util.Random;
 import java.io.File;
@@ -9,25 +22,29 @@ import java.io.FileNotFoundException;
 
 public class Quizzes {
 
+    /**
+     * Default constructor for the Quizzes class.
+     */
     public Quizzes() {
+        // Empty constructor
     }
 
     /**
      * Reads questions and answers from a CSV file and returns them as a map of
      * questions with their correct answers. Each line in the file represents a
-     * question, followed by four answer choices, and the correct answer.
+     * question and its correct answer, separated by a comma.
      *
      * @param filePath The path to the file containing questions and answers.
      * @return A map where keys are questions and values are correct answers.
      */
-
-    public Map<String, String> readQuestionsFromFile(String filePath) {
+    public Map<String, String> readQuestions(String filePath) {
         Map<String, String> questionsMap = new HashMap<>();
         try (Scanner scanner = new Scanner(new File(filePath))) {
             while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
-                String[] parts = line.split(",", 2); // Split into two parts:
-                                                     // question and answer
+                // Split the line into question and answer based on the first
+                // comma
+                String[] parts = line.split(",", 2);
                 if (parts.length == 2) {
                     String questionText = parts[0].trim();
                     String correctAnswer = parts[1].trim();
@@ -46,13 +63,13 @@ public class Quizzes {
 
     /**
      * Generates multiple-choice options for each question by randomly selecting
-     * other answers from the provided pool of all answers.
-     * 
+     * other answers from the pool of all correct answers.
+     *
      * @param questionsMap A map of questions and their correct answers.
      * @return A list of Question objects containing question text, choices, and
      *         correct answers.
      */
-    public List<Question> generateQuestionsWithChoices(
+    public List<Question> questionsWithChoices(
             Map<String, String> questionsMap) {
         List<Question> questionsList = new ArrayList<>();
         Random random = new Random();
@@ -72,6 +89,9 @@ public class Quizzes {
                     choices.add(randomAnswer);
                 }
             }
+
+            // Shuffle the choices to randomize their order
+            Collections.shuffle(choices);
 
             questionsList
                     .add(new Question(questionText, choices, correctAnswer));
@@ -105,11 +125,22 @@ public class Quizzes {
     }
 }
 
+/**
+ * @Class: Question
+ * @Purpose: Represents a single question with multiple-choice answers.
+ */
 class Question {
-    private String questionText;
-    private List<String> choices;
-    private String correctAnswer;
+    private String questionText; // The text of the question
+    private List<String> choices; // The list of multiple-choice answers
+    private String correctAnswer; // The correct answer to the question
 
+    /**
+     * Constructor for the Question class.
+     *
+     * @param questionText  The text of the question.
+     * @param choices       The list of multiple-choice answers.
+     * @param correctAnswer The correct answer to the question.
+     */
     public Question(String questionText, List<String> choices,
             String correctAnswer) {
         this.questionText = questionText;
@@ -117,14 +148,29 @@ class Question {
         this.correctAnswer = correctAnswer;
     }
 
+    /**
+     * Gets the text of the question.
+     *
+     * @return The question text.
+     */
     public String getQuestionText() {
         return questionText;
     }
 
+    /**
+     * Gets the list of multiple-choice answers.
+     *
+     * @return The list of choices.
+     */
     public List<String> getChoices() {
         return choices;
     }
 
+    /**
+     * Gets the correct answer to the question.
+     *
+     * @return The correct answer.
+     */
     public String getCorrectAnswer() {
         return correctAnswer;
     }
