@@ -1,3 +1,4 @@
+
 /**
  * @Class: Exam
  * @Authors: Mohamed Lemine
@@ -16,11 +17,13 @@ import java.util.Collections;
 
 public class Exam {
     private List<Question> questions; // List of questions for the exam
-    private int score;                // The player's score for the exam
+    private int score; // The player's score for the exam
 
     /**
-     * Constructor to initialize the exam with a list of questions and a countdown timer.
-     * @param questions The list of questions for the exam.
+     * Constructor to initialize the exam with a list of questions and a
+     * countdown timer.
+     * 
+     * @param questions      The list of questions for the exam.
      * @param countdownTimer The time limit for the exam in seconds.
      */
     public Exam(List<Question> questions, int countdownTimer) {
@@ -36,10 +39,11 @@ public class Exam {
     }
 
     /**
-     * Starts the exam for the given course and player.
-     * Handles fetching questions, conducting the exam, and determining pass/fail.
+     * Starts the exam for the given course and player. Handles fetching
+     * questions, conducting the exam, and determining pass/fail.
+     * 
      * @param currentCourse The course for which the exam is being taken.
-     * @param player The player taking the exam.
+     * @param player        The player taking the exam.
      * @return True if the player passes the course, false otherwise.
      */
     public boolean startExam(Course currentCourse, Player player) {
@@ -66,7 +70,8 @@ public class Exam {
 
         // Set the total time limit for the exam (e.g., 120 seconds)
         int time = 120;
-        System.out.println("Exam started. You have " + time + " seconds to complete the exam.");
+        System.out.println("Exam started. You have " + time
+                + " seconds to complete the exam.");
 
         // Limit questions to 10
         if (questions.size() > 10) {
@@ -78,13 +83,16 @@ public class Exam {
             // For hard courses, the player needs to take two exams
             System.out.println("Starting first exam...");
             int firstExamScore = conductExam(questions, time);
-            System.out.println("You scored " + firstExamScore + " out of " + questions.size() + " on the first exam.");
+            System.out.println("You scored " + firstExamScore + " out of "
+                    + questions.size() + " on the first exam.");
 
             // Option to drop the class or continue
             Scanner scanner = new Scanner(System.in);
             System.out.println("You have completed the first exam.");
-            System.out.println("Do you want to drop the class or continue to the next exam?");
-            System.out.println("(Type 'drop' to drop or 'continue' to proceed)");
+            System.out.println(
+                    "Do you want to drop the class or continue to the next exam?");
+            System.out
+                    .println("(Type 'drop' to drop or 'continue' to proceed)");
             String choice = scanner.nextLine();
             if (choice.equalsIgnoreCase("drop")) {
                 System.out.println("Class dropped.");
@@ -95,15 +103,17 @@ public class Exam {
             // Take the second exam
             System.out.println("Starting second exam...");
             int secondExamScore = conductExam(questions, time);
-            System.out.println("You scored " + secondExamScore + " out of " + questions.size() + " on the second exam.\n");
+            System.out.println("You scored " + secondExamScore + " out of "
+                    + questions.size() + " on the second exam.\n");
 
             // Calculate the average score of the two exams
             double averageScore = (firstExamScore + secondExamScore) / 2.0;
-            this.score = (int) averageScore;
+            this.score += (int) averageScore;
+
             System.out.println("Your total average score: " + this.score);
 
             // Check if the player has passed based on average score
-            if (averageScore >= 6) {
+            if (this.score >= 6) {
                 System.out.println("You have passed the Hard class!");
                 currentCourse.setPassed(true); // Mark the course as passed
                 return true;
@@ -115,10 +125,12 @@ public class Exam {
         } else {
             // For easy courses, the player needs to take one exam
             int examScore = conductExam(questions, time);
-            System.out.println("You scored " + examScore + " out of " + questions.size() + " on the exam.");
+            this.score = examScore;
+            System.out.println("You scored " + examScore + " out of "
+                    + questions.size() + " on the exam.");
 
             // Check if the player has passed
-            if (examScore >= 6) {
+            if (this.score >= 6) {
                 System.out.println("You have passed the Easy class!");
                 currentCourse.setPassed(true); // Mark the course as passed
                 return true;
@@ -131,12 +143,15 @@ public class Exam {
     }
 
     /**
-     * Conducts the exam by presenting questions to the player within a time limit.
+     * Conducts the exam by presenting questions to the player within a time
+     * limit.
+     * 
      * @param questionsWithChoices The list of questions with their choices.
-     * @param timeLimitInSeconds The total time limit for the exam in seconds.
+     * @param timeLimitInSeconds   The total time limit for the exam in seconds.
      * @return The player's score for the exam.
      */
-    private int conductExam(List<Question> questionsWithChoices, int timeLimitInSeconds) {
+    private int conductExam(List<Question> questionsWithChoices,
+            int timeLimitInSeconds) {
         Scanner scanner = new Scanner(System.in);
         int examScore = 0;
 
@@ -147,7 +162,8 @@ public class Exam {
 
         for (int i = 0; i < questionsWithChoices.size(); i++) {
             long currentTime = System.currentTimeMillis();
-            long elapsedTime = (currentTime - examStartTime) / 1000; // in seconds
+            long elapsedTime = (currentTime - examStartTime) / 1000; // in
+                                                                     // seconds
             long timeRemaining = timeLimitInSeconds - elapsedTime;
 
             if (timeRemaining <= 0) {
@@ -155,7 +171,8 @@ public class Exam {
                 break;
             }
 
-            System.out.println("\nTime remaining: " + timeRemaining + " seconds\n");
+            System.out.println(
+                    "\nTime remaining: " + timeRemaining + " seconds\n");
 
             Question question = questionsWithChoices.get(i);
             List<String> choices = question.getChoices();
@@ -164,7 +181,8 @@ public class Exam {
             Collections.shuffle(choices);
 
             // Display the question
-            System.out.println("Question " + (i + 1) + ": " + question.getQuestionText() + "\n");
+            System.out.println("Question " + (i + 1) + ": "
+                    + question.getQuestionText() + "\n");
 
             // Display the choices
             for (int j = 0; j < choices.size(); j++) {
@@ -185,18 +203,23 @@ public class Exam {
             String userAnswer = scanner.nextLine().trim().toUpperCase();
 
             // Validate and check the user's answer
-            if (userAnswer.length() == 1 && userAnswer.charAt(0) >= 'A' && userAnswer.charAt(0) <= 'D') {
+            if (userAnswer.length() == 1 && userAnswer.charAt(0) >= 'A'
+                    && userAnswer.charAt(0) <= 'D') {
                 if (userAnswer.charAt(0) == correctLetter) {
                     System.out.println("Correct!");
                     examScore++;
                 } else {
-                    System.out.println("Incorrect. The correct answer was " + correctLetter + ".");
+                    System.out.println("Incorrect. The correct answer was "
+                            + correctLetter + ".");
                 }
-            } else if (userAnswer.equalsIgnoreCase("Messi") || userAnswer.equalsIgnoreCase("Mohamed")) {
-                System.out.println("Correct!"); // "Messi" and "Mohamed" are always considered correct
+            } else if (userAnswer.equalsIgnoreCase("Messi")
+                    || userAnswer.equalsIgnoreCase("Mohamed")) {
+                System.out.println("Correct!"); // "Messi" and "Mohamed" are
+                                                // always considered correct
                 examScore++;
             } else {
-                System.out.println("Invalid answer. Please enter A, B, C, or D.");
+                System.out
+                        .println("Invalid answer. Please enter A, B, C, or D.");
             }
         }
 
