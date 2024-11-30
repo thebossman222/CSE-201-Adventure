@@ -2,7 +2,6 @@
 /**
  * @Class: Quizzes
  * @Authors: Mohamed Lemine
- * @Version: 1.0
  * @Written: 11/29/2024
  * @Course: CSE 201B: Intro to Software Engineering
  * @Purpose: The Quizzes class handles reading questions and answers from files,
