@@ -1,3 +1,13 @@
+/**
+ * @Class: Exam
+ * @Authors: Mohamed Lemine
+ * @Written: 11/30/2024
+ * @Course: CSE 201B: Intro to Software Engineering
+ * @Purpose: The Exam class manages the exam process in the MiamiQuest game.
+ * It handles fetching questions, conducting the exam with a timer, scoring,
+ * and determining if the player has passed or failed a course based on exam results.
+ */
+
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -5,26 +15,42 @@ import java.util.Scanner;
 import java.util.Collections;
 
 public class Exam {
-    private List<Question> questions;
-    private int score;
+    private List<Question> questions; // List of questions for the exam
+    private int score;                // The player's score for the exam
 
-    // Constructor to initialize exam questions and timer
+    /**
+     * Constructor to initialize the exam with a list of questions and a countdown timer.
+     * @param questions The list of questions for the exam.
+     * @param countdownTimer The time limit for the exam in seconds.
+     */
     public Exam(List<Question> questions, int countdownTimer) {
         this.questions = questions;
         this.score = 0;
     }
 
+    /**
+     * Default constructor.
+     */
     public Exam() {
-
+        // Empty constructor
     }
 
+    /**
+     * Starts the exam for the given course and player.
+     * Handles fetching questions, conducting the exam, and determining pass/fail.
+     * @param currentCourse The course for which the exam is being taken.
+     * @param player The player taking the exam.
+     * @return True if the player passes the course, false otherwise.
+     */
     public boolean startExam(Course currentCourse, Player player) {
-
+        // Get the professor associated with the current course
         Professor professor = currentCourse.getProfessor();
+
+        // Initialize the score with the professor's extra credit
         this.score = professor.getExtraCredit();
 
+        // Fetch questions if not already available
         if (questions == null || questions.isEmpty()) {
-            // Fetch questions from the course
             Quizzes quizzes = new Quizzes();
             String filePath = currentCourse.file();
             File file = new File(filePath);
@@ -33,34 +59,32 @@ public class Exam {
                 return false;
             }
 
+            // Read questions from the file and generate choices
             Map<String, String> questionsMap = quizzes.readQuestions(filePath);
             questions = quizzes.questionsWithChoices(questionsMap);
         }
 
         // Set the total time limit for the exam (e.g., 120 seconds)
         int time = 120;
-
-        System.out.println("Exam started. You have " + time
-                + " seconds to complete the exam.");
+        System.out.println("Exam started. You have " + time + " seconds to complete the exam.");
 
         // Limit questions to 10
         if (questions.size() > 10) {
             questions = questions.subList(0, 10);
         }
 
+        // Check the difficulty level of the professor
         if (currentCourse.getProfessorDifficulty().equalsIgnoreCase("Hard")) {
-            // Take the first exam
+            // For hard courses, the player needs to take two exams
             System.out.println("Starting first exam...");
             int firstExamScore = conductExam(questions, time);
-            System.out.println("You scored " + firstExamScore + " out of "
-                    + questions.size() + " on the first exam.");
+            System.out.println("You scored " + firstExamScore + " out of " + questions.size() + " on the first exam.");
 
             // Option to drop the class or continue
             Scanner scanner = new Scanner(System.in);
             System.out.println("You have completed the first exam.");
-            System.out.println(
-                    " Do you want to drop the class or continue to the next exam? \n"
-                            + " (Type 'drop' to drop or 'continue' to proceed)");
+            System.out.println("Do you want to drop the class or continue to the next exam?");
+            System.out.println("(Type 'drop' to drop or 'continue' to proceed)");
             String choice = scanner.nextLine();
             if (choice.equalsIgnoreCase("drop")) {
                 System.out.println("Class dropped.");
@@ -71,19 +95,15 @@ public class Exam {
             // Take the second exam
             System.out.println("Starting second exam...");
             int secondExamScore = conductExam(questions, time);
-
-            System.out.println("You scored " + secondExamScore + " out of "
-                    + questions.size() + " on the second exam. \n");
+            System.out.println("You scored " + secondExamScore + " out of " + questions.size() + " on the second exam.\n");
 
             // Calculate the average score of the two exams
             double averageScore = (firstExamScore + secondExamScore) / 2.0;
-
             this.score = (int) averageScore;
+            System.out.println("Your total average score: " + this.score);
 
-            System.out.println("You total score :" + this.score);
-
-            // Check if passed both exams
-            if (firstExamScore >= 6 && this.score >= 6) {
+            // Check if the player has passed based on average score
+            if (averageScore >= 6) {
                 System.out.println("You have passed the Hard class!");
                 currentCourse.setPassed(true); // Mark the course as passed
                 return true;
@@ -93,13 +113,11 @@ public class Exam {
                 return false;
             }
         } else {
-
-            // Take one exam for easy level
+            // For easy courses, the player needs to take one exam
             int examScore = conductExam(questions, time);
-            System.out.println("You scored " + examScore + " out of "
-                    + questions.size() + " on the exam.");
+            System.out.println("You scored " + examScore + " out of " + questions.size() + " on the exam.");
 
-            // Check if passed
+            // Check if the player has passed
             if (examScore >= 6) {
                 System.out.println("You have passed the Easy class!");
                 currentCourse.setPassed(true); // Mark the course as passed
@@ -112,9 +130,13 @@ public class Exam {
         }
     }
 
-    // Method to conduct the exam with countdown timer
-    private int conductExam(List<Question> questionsWithChoices,
-            int timeLimitInSeconds) {
+    /**
+     * Conducts the exam by presenting questions to the player within a time limit.
+     * @param questionsWithChoices The list of questions with their choices.
+     * @param timeLimitInSeconds The total time limit for the exam in seconds.
+     * @return The player's score for the exam.
+     */
+    private int conductExam(List<Question> questionsWithChoices, int timeLimitInSeconds) {
         Scanner scanner = new Scanner(System.in);
         int examScore = 0;
 
@@ -125,8 +147,7 @@ public class Exam {
 
         for (int i = 0; i < questionsWithChoices.size(); i++) {
             long currentTime = System.currentTimeMillis();
-            long elapsedTime = (currentTime - examStartTime) / 1000; // in
-                                                                     // seconds
+            long elapsedTime = (currentTime - examStartTime) / 1000; // in seconds
             long timeRemaining = timeLimitInSeconds - elapsedTime;
 
             if (timeRemaining <= 0) {
@@ -134,9 +155,7 @@ public class Exam {
                 break;
             }
 
-            System.out
-                    .println("\nTime remaining: " + timeRemaining
-                            + " seconds \n");
+            System.out.println("\nTime remaining: " + timeRemaining + " seconds\n");
 
             Question question = questionsWithChoices.get(i);
             List<String> choices = question.getChoices();
@@ -145,9 +164,7 @@ public class Exam {
             Collections.shuffle(choices);
 
             // Display the question
-            System.out.println(
-                    "Question " + (i + 1) + ": " + question.getQuestionText()
-                            + "\n");
+            System.out.println("Question " + (i + 1) + ": " + question.getQuestionText() + "\n");
 
             // Display the choices
             for (int j = 0; j < choices.size(); j++) {
@@ -164,31 +181,25 @@ public class Exam {
             }
 
             // Prompt user for their answer
-            System.out.print("Your answer: ");
+            System.out.print("\nYour answer: ");
             String userAnswer = scanner.nextLine().trim().toUpperCase();
 
-            if (userAnswer.length() == 1 && userAnswer.charAt(0) >= 'A'
-                    && userAnswer.charAt(0) <= 'D') {
+            // Validate and check the user's answer
+            if (userAnswer.length() == 1 && userAnswer.charAt(0) >= 'A' && userAnswer.charAt(0) <= 'D') {
                 if (userAnswer.charAt(0) == correctLetter) {
                     System.out.println("Correct!");
                     examScore++;
                 } else {
-                    System.out.println("Incorrect. The correct answer was "
-                            + correctLetter + ".");
+                    System.out.println("Incorrect. The correct answer was " + correctLetter + ".");
                 }
-            } else if (userAnswer.equalsIgnoreCase("Messi")
-                    || userAnswer.equalsIgnoreCase("Mohamed")) {
-                System.out.println("Correct!"); // "Messi" and "Mohamed" is
-                                                // always considered correct
+            } else if (userAnswer.equalsIgnoreCase("Messi") || userAnswer.equalsIgnoreCase("Mohamed")) {
+                System.out.println("Correct!"); // "Messi" and "Mohamed" are always considered correct
                 examScore++;
             } else {
-                System.out
-                        .println("Invalid answer. Please enter A, B, C, or D.");
-
+                System.out.println("Invalid answer. Please enter A, B, C, or D.");
             }
         }
 
         return examScore;
     }
-
 }
