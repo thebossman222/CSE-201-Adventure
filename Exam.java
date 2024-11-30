@@ -51,7 +51,7 @@ public class Exam {
         Professor professor = currentCourse.getProfessor();
 
         // Initialize the score with the professor's extra credit
-        this.score = professor.getExtraCredit();
+        this.score = professor.assignExtraCredit();
 
         // Fetch questions if not already available
         if (questions == null || questions.isEmpty()) {
