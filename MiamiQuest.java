@@ -136,7 +136,7 @@ public class MiamiQuest {
                 } else if (userChoice.equalsIgnoreCase("/classes")) {
                     player.displayClasses(); // Display all registered classes
                 } else if (userChoice.equalsIgnoreCase("/drop")) {
-                    player.dropClass(); // Drop a class through Player instance
+                    player.dropCourse(); // Drop a class through Player instance
                     start(player); // Start a new class for player
                 } else if (userChoice.equalsIgnoreCase("/restart")) {
                     gameController.restartGame(); // Restart the game using
