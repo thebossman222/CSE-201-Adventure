@@ -1,3 +1,18 @@
+Who was the first President of the United States?,George Washington
+What year did World War II end?,1945
+Which empire was ruled by Julius Caesar?,Roman Empire
+What was the name of the ship that carried the Pilgrims to America?,Mayflower
+Who wrote the Declaration of Independence?,Thomas Jefferson
+What ancient civilization built the pyramids?,Egyptians
+In which year did the Berlin Wall fall?,1989
+What was the name of the first man to step on the moon?,Neil Armstrong
+Who was the leader of the Soviet Union during World War II?,Joseph Stalin
+What was the primary language of the Roman Empire?,Latin
+Who was the British monarch during the American Revolution?,King George III
+Which country gifted the Statue of Liberty to the United States?,France
+What was the name of the ship that sank in 1912 after hitting an iceberg?,Titanic
+Who is known as the "Father of Modern Physics"?,Albert Einstein
+What ancient city was buried by the eruption of Mount Vesuvius?,Pompeii
 What is the capital of France?,Paris
 Which continent is the largest by area?,Asia
 What is the longest river in the world?,Nile
@@ -10,6 +25,21 @@ Which desert is the largest in the world?,Sahara
 What country is known as the Land of the Rising Sun?,Japan
 Which sea is the saltiest?,Dead Sea
 What is the capital of Canada?,Ottawa
+Who was the first emperor of Rome?,Augustus
+What year did the American Civil War begin?,1861
+Which civilization invented the first form of writing, cuneiform?,Sumerians
+Who was the famous nurse during the Crimean War?,Florence Nightingale
+In what year did the United Nations officially form?,1945
+Who led the Indian independence movement through nonviolent resistance?,Mahatma Gandhi
+What ancient wonder was located in Babylon?,Hanging Gardens
+What war was fought between the North and South in the United States?,Civil War
+Who was the first female Prime Minister of the United Kingdom?,Margaret Thatcher
+Which treaty ended World War I?,Treaty of Versailles
+What was the main cause of the Great Depression?,Stock Market Crash of 1929
+Who was the leader of Nazi Germany during World War II?,Adolf Hitler
+What was the name of the Cold War policy aimed at preventing the spread of communism?,Containment
+What event marked the beginning of the French Revolution?,Storming of the Bastille
+Which explorer is credited with discovering America in 1492?,Christopher Columbus
 Which country has the most islands?,Sweden
 What is the longest mountain range in the world?,Andes
 The Great Barrier Reef is located in which country?,Australia
