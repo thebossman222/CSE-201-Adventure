@@ -55,19 +55,8 @@ public class Exam {
 
         // Fetch questions if not already available
         if (questions == null || questions.isEmpty()) {
-            Quizzes quizzes = new Quizzes();
-            String filePath = currentCourse.file();
-            File file = new File(filePath);
-            if (!file.exists()) {
-                System.out.println("Error: File not found at " + filePath);
-                return false;
-            }
-
-            // Read questions from the file and generate choices
-            Map<String, String> questionsMap = quizzes.readQuestions(filePath);
-            questions = quizzes.questionsWithChoices(questionsMap);
+            questions = currentCourse.getQuestions();
         }
-
         // Set the total time limit for the exam (e.g., 120 seconds)
         int time = 120;
         System.out.println("Exam started. You have " + time
@@ -127,7 +116,7 @@ public class Exam {
             int examScore = conductExam(questions, time);
             this.score = examScore;
             System.out.println("You scored " + examScore + " out of "
-                    + questions.size() + " on the exam.");
+                    + questions.size() + " on the exam. \n");
 
             // Check if the player has passed
             if (this.score >= 6) {
