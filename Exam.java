@@ -114,7 +114,7 @@ public class Exam {
         } else {
             // For easy courses, the player needs to take one exam
             int examScore = conductExam(questions, time);
-            this.score = examScore;
+            this.score += examScore;
             System.out.println("You scored " + examScore + " out of "
                     + questions.size() + " on the exam. \n");
 
