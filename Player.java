@@ -20,6 +20,7 @@ public class Player {
     private boolean canRetake;     // Indicates if the player can retake an exam
     private List<Course> courseList; // List of courses the player is registered in
     private int courseNumber;      // Counter for the number of courses registered
+    private boolean gameWon = false;   
 
     /**
      * Constructor to initialize the player with default values.
@@ -264,5 +265,20 @@ public class Player {
      */
     public boolean canRetake() {
         return canRetake;
+    }
+    
+    /**
+     * returns if the game has been won or not
+     * @return gameWon, a boolean, which is false while the game hasn't been won.
+     */
+    public boolean getGameWon() {
+        return gameWon;
+    }
+    /**
+     * Setter method to set win status
+     * @param Won, true if game is won, false if not yet.
+     */
+    public void setGameWon(boolean Won) {
+        gameWon = Won;
     }
 }

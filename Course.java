@@ -39,7 +39,7 @@ public class Course {
      */
     public Course(int courseType) {
         this.professor = new Professor(); // Assigns a new Professor
-        this.professorDifficulty = professor.getDifficulty(); // Sets the professor's difficulty
+        this.professorDifficulty = professor.randomizeDifficulty(); // Sets the professor's difficulty
         this.time = randomizeClassTime(); // Sets the class time
         this.questions = new ArrayList<>(); // Initialize the questions list
         this.name = setCourseName(courseType); // Set the course name based on type
@@ -105,7 +105,7 @@ public class Course {
      * @return A string containing details about the course.
      */
     public String displayCourseInfo() {
-        int extraCredit = professor.getExtraCredit();
+        int extraCredit = professor.assignExtraCredit();
         return "Course Name: " + this.name +
                 "\nClass Time: " + this.time +
                 "\nProfessor Difficulty: " + this.professorDifficulty +

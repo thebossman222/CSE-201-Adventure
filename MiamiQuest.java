@@ -113,8 +113,25 @@ public class MiamiQuest {
         // A loop that runs until the user prompts it to stop.
         // Each eser command is stored in userChoice until game is finished.
         // A list of available commands are accessible with 'help'
-        while (true) {
+        while(!player.getGameWon()) {
+            
             try {
+                if (player.getCredits() >= 11) {
+                    player.setGameWon(true);
+                    System.out.println("You've graduated! Congratulations on winning the game.");
+                    gameController.endGame();
+                    scanner.close();
+                    return;
+                }
+                
+                if (player.getFailedExams() >2) {
+                    player.setGameWon(true);
+                    System.out.println("You've failed multiple classes and flunked out. You lose.");
+                    gameController.endGame();
+                    scanner.close();
+                    return;
+                }
+                
                 System.out.println("'help': Display Help & Commands menu");
                 System.out.println("'start': Start Game");
                 System.out.println("'stop': Exit the program.");
@@ -134,7 +151,7 @@ public class MiamiQuest {
                 } else if (userChoice.equalsIgnoreCase("/credits")) {
                     displayCredits(player); // Check player credits
                 } else if (userChoice.equalsIgnoreCase("/classes")) {
-                    player.displayClasses(); // Display all registered classes
+                    player.displayCourses(); // Display all registered classes
                 } else if (userChoice.equalsIgnoreCase("/drop")) {
                     player.dropCourse(); // Drop a class through Player instance
                     start(player); // Start a new class for player
