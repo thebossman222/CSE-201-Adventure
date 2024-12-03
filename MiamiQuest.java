@@ -133,7 +133,7 @@ public class MiamiQuest {
                 } else if (userChoice.equalsIgnoreCase("/credits")) {
                     displayCredits(player); // Check player credits
                 } else if (userChoice.equalsIgnoreCase("/classes")) {
-                    player.displayClasses(); // Display all registered classes
+                    player.displayCourses(); // Display all registered classes
                 } else if (userChoice.equalsIgnoreCase("/drop")) {
                     player.dropCourse(); // Drop a class through Player instance
                     start(player); // Start a new class for player
