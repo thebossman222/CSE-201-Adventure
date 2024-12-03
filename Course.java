@@ -81,9 +81,9 @@ public class Course {
             case 2:
                 return "Math";
             case 3:
-                return "Sports"; // Corrected from "Sport" to "Sports"
+                return "Sports"; 
             case 4:
-                return "Computer Science"; // Corrected from "CSE" to "Computer Science"
+                return "Computer Science"; 
             default:
                 return "Unknown";
         }
