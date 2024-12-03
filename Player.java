@@ -1,3 +1,4 @@
+
 /**
  * @Class: Player
  * @Authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
@@ -13,13 +14,14 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Player {
-    private int credits;           // The player's total credits
-    private int failedExams;       // The number of exams the player has failed
-    private boolean canDrop;       // Indicates if the player can drop a course
-    private boolean canRetake;     // Indicates if the player can retake an exam
-    private List<Course> courseList; // List of courses the player is registered in
-    private int courseNumber;      // Counter for the number of courses registered
-    private boolean gameWon = false;   
+    private int credits; // The player's total credits
+    private int failedExams; // The number of exams the player has failed
+    private boolean canDrop; // Indicates if the player can drop a course
+    private boolean canRetake; // Indicates if the player can retake an exam
+    private List<Course> courseList; // List of courses the player is registered
+                                     // in
+    private int courseNumber; // Counter for the number of courses registered
+    private boolean gameWon = false;
 
     /**
      * Constructor to initialize the player with default values.
@@ -35,6 +37,7 @@ public class Player {
 
     /**
      * Registers the player for a new course and adds it to the course list.
+     * 
      * @return The newly registered Course object.
      */
     public Course registerCourse() {
@@ -48,6 +51,7 @@ public class Player {
 
     /**
      * Checks and returns the player's current credits.
+     * 
      * @return The player's total credits.
      */
     public int getCredits() {
@@ -57,6 +61,7 @@ public class Player {
 
     /**
      * Checks if the player can drop a course.
+     * 
      * @return True if the player can drop a course, false otherwise.
      */
     public boolean canDrop() {
@@ -65,45 +70,65 @@ public class Player {
 
     /**
      * Allows the player to drop a course if possible.
+     * 
      * @return True if the course was successfully dropped, false otherwise.
      */
     public boolean dropCourse() {
         if (canDrop && !courseList.isEmpty()) {
-            courseNumber--;
             displayCourses();
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter the number of the course you want to drop: ");
-            int courseNumber = scanner.nextInt();
+            System.out
+                    .print("Enter the number of the course you want to drop: ");
+            int selectedCourseNumber = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
-            if (courseNumber > 0 && courseNumber <= courseList.size()) {
-                Course droppedCourse = courseList.remove(courseNumber - 1);
+            if (selectedCourseNumber > 0
+                    && selectedCourseNumber <= courseList.size()) {
+                Course droppedCourse = courseList
+                        .remove(selectedCourseNumber - 1);
                 canDrop = false; // Set canDrop to false once used
-                System.out.println("Course dropped: " + droppedCourse.getName());
+                System.out
+                        .println("Course dropped: " + droppedCourse.getName());
+
+                // Check if the course was passed
+                if (droppedCourse.isPassed()) {
+                    // Subtract the credits earned from this course
+                    credits -= 3;
+                    if (credits < 0) {
+                        credits = 0; // Ensure credits don't go negative
+                    }
+                    System.out.println(
+                            "You have lost 3 credits from dropping a passed course.");
+                }
+
                 return true;
             } else {
                 System.out.println("Invalid course number.");
                 return false;
             }
         } else {
-            System.out.println("You have already used your drop option or have no courses to drop.");
+            System.out.println(
+                    "You have already used your drop option or have no courses to drop.");
             return false;
         }
     }
 
     /**
      * Allows the player to drop a specific course.
+     * 
      * @param course The Course object to be dropped.
      * @return True if the course was successfully dropped, false otherwise.
      */
     public boolean dropCourse(Course course) {
         if (canDrop && courseList.contains(course)) {
+            courseNumber--;
             courseList.remove(course);
             canDrop = false; // Set canDrop to false once used
             System.out.println("Course dropped: " + course.getName());
             return true;
         } else {
-            System.out.println("You have already used your drop option or the course is not in your course list.");
+            System.out.println(
+                    "You have already used your drop option or the course is not in your course list.");
             return false;
         }
     }
@@ -124,10 +149,9 @@ public class Player {
             return;
         }
 
-        displayCourses();
         if (courseNumber > 0 && courseNumber <= courseList.size()) {
             Course currentCourse = courseList.get(courseNumber - 1);
-            System.out.println("Starting exam for course: " + currentCourse.getName());
+
             Exam exam = new Exam();
             boolean passed = exam.startExam(currentCourse, this);
 
@@ -146,6 +170,7 @@ public class Player {
 
     /**
      * Allows the player to retake an exam if possible.
+     * 
      * @return True if the exam was successfully retaken, false otherwise.
      */
     public boolean retakeExam() {
@@ -160,7 +185,8 @@ public class Player {
             // Allow the player to choose which exam to retake
             displayCourses();
             Scanner scanner = new Scanner(System.in);
-            System.out.print("Enter the number of the course you want to retake the exam for: ");
+            System.out.print(
+                    "Enter the number of the course you want to retake the exam for: ");
             int courseNumber = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -171,7 +197,8 @@ public class Player {
                     return false;
                 }
 
-                System.out.println("Retaking the exam for course: " + currentCourse.getName());
+                System.out.println("Retaking the exam for course: "
+                        + currentCourse.getName());
                 Exam exam = new Exam();
                 boolean passed = exam.startExam(currentCourse, this);
 
@@ -196,6 +223,7 @@ public class Player {
 
     /**
      * Increments the player's credits by the specified amount.
+     * 
      * @param points The number of credits to add.
      */
     public void addCredits(int points) {
@@ -211,6 +239,7 @@ public class Player {
 
     /**
      * Gets the number of exams the player has failed.
+     * 
      * @return The number of failed exams.
      */
     public int getFailedExams() {
@@ -219,6 +248,7 @@ public class Player {
 
     /**
      * Gets the list of courses the player is registered in.
+     * 
      * @return The list of courses.
      */
     public List<Course> getCourseList() {
@@ -226,23 +256,26 @@ public class Player {
     }
 
     /**
-     * Displays all registered courses along with their status (Passed/Not Passed).
+     * Displays all registered courses along with their status (Passed/Not
+     * Passed).
      */
     public void displayCourses() {
         if (courseList.isEmpty()) {
             System.out.println("No courses registered yet.");
         } else {
-            System.out.println("Registered courses:");
+            System.out.println("\nRegistered courses:");
             for (int i = 0; i < courseList.size(); i++) {
                 Course c = courseList.get(i);
                 String status = c.isPassed() ? "Passed" : "Not Passed";
-                System.out.println((i + 1) + ". " + c.getName() + " - " + status);
+                System.out
+                        .println((i + 1) + ". " + c.getName() + " - " + status);
             }
         }
     }
 
     /**
      * Checks if the player is eligible to graduate.
+     * 
      * @return True if the player can graduate, false otherwise.
      */
     public boolean canGraduate() {
@@ -254,30 +287,35 @@ public class Player {
             }
         }
 
-        // Assuming each passed course gives 3 credits and 12 credits are needed to graduate
+        // Assuming each passed course gives 3 credits and 12 credits are needed
+        // to graduate
         return credits >= 12 && passedCourses >= 4;
     }
 
     /**
      * Checks if the player can retake an exam.
+     * 
      * @return True if the player can retake an exam, false otherwise.
      */
     public boolean canRetake() {
         return canRetake;
     }
-    
+
     /**
-     * returns if the game has been won or not
-     * @return gameWon, a boolean, which is false while the game hasn't been won.
+     * Sets the gameWon status based on the provided parameter.
+     * 
+     * @param won True if the game has been won, false otherwise.
      */
-    public boolean getGameWon() {
-        return gameWon;
+    public void setGameWon(boolean won) {
+        gameWon = won;
     }
+
     /**
-     * Setter method to set win status
-     * @param Won, true if game is won, false if not yet.
+     * Checks if the game has been won.
+     * 
+     * @return True if the game has been won, false otherwise.
      */
-    public void setGameWon(boolean Won) {
-        gameWon = Won;
+    public boolean isGameWon() {
+        return gameWon;
     }
 }
