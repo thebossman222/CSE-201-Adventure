@@ -1,7 +1,6 @@
 /**
  * @Class: Player
  * @Authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
- * @Version: 1.0
  * @Written: 11/30/2024
  * @Course: CSE 201B: Intro to Software Engineering
  * @Purpose: The Player class represents the player in the MiamiQuest game.
