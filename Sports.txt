@@ -24,7 +24,7 @@ Which soccer player is known for his signature move called the "Rabona"?,Ángel 
 Which national team is known as "La Albiceleste"?,Argentina
 Who is the manager famous for coining the term "The Special One"?,José Mourinho
 Which soccer legend is known for the quote "I think therefore I play"?,Andrea Pirlo
-What is the largest stadium by capacity in Europe, often hosting significant soccer matches?,Camp Nou
+What is the largest stadium by capacity in Europe often hosting significant soccer matches?,Camp Nou
 Which country hosted the 2014 FIFA World Cup?,Brazil
 Which German club is known as "Bayern"?,FC Bayern Munich
 who is the GOAT (THE GREATEST OF ALL TIME)?, Messi
