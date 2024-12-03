@@ -52,6 +52,9 @@ public class Exam {
 
         // Initialize the score with the professor's extra credit
         this.score = professor.assignExtraCredit();
+        
+        System.out.println(
+                "Starting exam for course: " + currentCourse.getName()+ "\n");
 
         // Fetch questions if not already available
         if (questions == null || questions.isEmpty()) {
