@@ -1,6 +1,7 @@
+
 /**
  * @Class: MiamiQuest
- * @authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
+ * @Authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
  * @Written: 11/22/2024
  * @Course: CSE 201B: Intro to Software Engineering
  * @Purpose: The MiamiQuest class serves as the main entry point for the 
@@ -19,25 +20,18 @@ public class MiamiQuest {
      */
     public static void displayHelpMenu() {
         System.out.println("---- Help Menu ----\n"
-                + "Controls:\n"
-                + "- Type your answers and press Enter.\n"
-                + "- Type 'help' at any time to view this menu again.\n"
+                + "Game Controls:\n"
+                + "- Navigate the game using the menu options provided.\n"
+                + "- Enter the number corresponding to your choice.\n"
                 + "Game Rules:\n"
-                + "- Earn 10 credit points to graduate.\n"
-                + "- Passing a class earns you 2 credit points.\n"
-                + "- Pass classes by scoring at least 6 out of 10 on finals.\n"
-                + "- Bonuses and penalties affect your final exam score.\n"
+                + "- Earn 12 credit points and pass at least 4 courses to graduate.\n"
+                + "- Passing a class earns you 3 credit points.\n"
+                + "- Pass classes by scoring at least 6 out of 10 on exams.\n"
+                + "- You have one opportunity to retake an exam and one to drop a course.\n"
                 + "Tips:\n"
-                + "- Be quick on timed questions.\n"
-                + "- Pay attention to class attributes.\n"
-                + "- Have fun :)\n"
-                + "Commands:\n"
-                + "/drop : Drop the class, you only get 1 of these so choose wisely!\n"
-                + "/credits : Check the number of credits you currently have to check your progress.\n"
-                + "/classes : Display all registered classes.\n"
-                + "/restart : Restart the game and start back at freshman year, you may do this at any point throughout your game\n"
-                + "/clear : Clear the console! Feel free to do this if it becomes too cluttered with text.\n"
-                + "/retake : Retake an exam. You only get this option once throughout your game!\n"
+                + "- Focus on passing your courses to accumulate credits.\n"
+                + "- Use your retake and drop options wisely.\n"
+                + "- Have fun and good luck!\n"
                 + "--------------------\n");
     }
 
@@ -45,7 +39,6 @@ public class MiamiQuest {
      * Clears the console by printing empty lines.
      */
     public static void clearConsole() {
-        System.out.println("Clearing console...");
         for (int i = 0; i < 50; i++)
             System.out.println();
     }
@@ -54,20 +47,24 @@ public class MiamiQuest {
      * Displays the current credit points the player has earned.
      */
     public static void displayCredits(Player player) {
-        player.checkCredits(); // Check credits through player instance
+        player.getCredits(); // Display credits through player instance
     }
 
     /**
-     * Starts the game by creating a new Class instance and displaying its
-     * characteristics.
+     * Starts the game by creating a new Course instance and initiating the
+     * exam.
      */
     public static void start(Player player) {
         Scanner sc = new Scanner(System.in);
-        Course currentClass = player.registerCourse(); // Register player for a
-                                                       // new class
-        System.out.println("Course started with the following characteristics: \n");
-        System.out.println(currentClass.displayCourseInfo() + "\n");
+        Course currentCourse = player.registerCourse();
+        // Register player for a new course
+        currentCourse.displayCourseInfo();
+        
+        System.out.println(
+                "Course started with the following characteristics: \n");
 
+        System.out.println(currentCourse.displayCourseInfo() + "\n");
+        // Automatically start the exam
         System.out.print("Enter S to take the Exam: ");
         while (true) {
             String in = sc.nextLine();
@@ -84,19 +81,18 @@ public class MiamiQuest {
      * Allows the player to retake the exam if they haven't already done so.
      */
     public static void retakeExam(Player player) {
-        if (player.retakeExam()) { // retakeExam() in Player returns true if
-                                   // successful
+        if (player.retakeExam()) { // Pass scanner to player's method
             System.out.println("Retaking the exam...");
         } else {
-            System.out.println("You have already used your retake option.");
+            System.out.println(
+                    "You have already used your retake option or have no failed courses.");
         }
     }
 
     /**
      * Main method that runs the MiamiQuest game. It handles user inputs and
-     * manages the game flow by running a loop that will not stop until the user prompts
-     * the game to stop or wins. Uses a scanner to read inputs and throws InputMismatchException
-     * if user inputs a typo.
+     * manages the game flow by running a loop until the player graduates,
+     * fails, or exits.
      */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -106,77 +102,93 @@ public class MiamiQuest {
                                                               // GameController
                                                               // instance
 
-        // Start the game using GameController
-        gameController.startGame();
+        System.out.println("Enter 'start' to Start The Game \n");
+        String in = scanner.nextLine();
 
-        // A loop that runs until the user prompts it to stop.
-        // Each eser command is stored in userChoice until game is finished.
-        // A list of available commands are accessible with 'help'
-        while(!player.getGameWon()) {
-            
-            try {
-                if (player.getCredits() >= 11) {
-                    player.setGameWon(true);
-                    System.out.println("You've graduated! Congratulations on winning the game.");
-                    gameController.endGame();
-                    scanner.close();
-                    return;
-                }
-                
-                if (player.getFailedExams() >2) {
-                    player.setGameWon(true);
-                    System.out.println("You've failed multiple classes and flunked out. You lose.");
-                    gameController.endGame();
-                    scanner.close();
-                    return;
-                }
-                
-                System.out.println("'help': Display Help & Commands menu");
-                System.out.println("'start': Start Game");
-                System.out.println("'stop': Exit the program.");
-                
-                String userChoice = scanner.nextLine();
+        if (in.equalsIgnoreCase("start")) {
 
-                // Handle user input commands
-                if (userChoice.equalsIgnoreCase("help")) {
-                    displayHelpMenu();
-                } else if (userChoice.equalsIgnoreCase("stop")) {
-                    gameController.endGame(); // End the game using
-                                              // GameController
-                    scanner.close();
-                    return; // Stop the loop.
-                } else if (userChoice.equalsIgnoreCase("start")) {
-                    start(player); // Start a new class for player
-                } else if (userChoice.equalsIgnoreCase("/credits")) {
-                    displayCredits(player); // Check player credits
-                } else if (userChoice.equalsIgnoreCase("/classes")) {
-                    player.displayCourses(); // Display all registered classes
-                } else if (userChoice.equalsIgnoreCase("/drop")) {
-                    player.dropCourse(); // Drop a class through Player instance
-                    start(player); // Start a new class for player
-                } else if (userChoice.equalsIgnoreCase("/restart")) {
-                    gameController.restartGame(); // Restart the game using
-                                                  // GameController
-                    player = new Player(); // Reset the player to a new instance
-                    start(player); // Start a new class for player
-                } else if (userChoice.equalsIgnoreCase("/clear")) {
-                    clearConsole(); // Clear console for user
-                } else if (userChoice.equalsIgnoreCase("/retake")) {
-                    retakeExam(player); // Retake an exam through Player
-                                        // instance
-                } else if (userChoice.equalsIgnoreCase("/pause")) {
-                    gameController.pauseGame(); // Pause the game using
-                                                // GameController
-                } else {
+            // Start the game using GameController
+            gameController.startGame();
+
+            // Automatically start the first course and exam
+            start(player);
+
+            // Main game loop
+            while (!player.isGameWon()) {
+
+                try {
+                    // Check for graduation or failure conditions
+                    if (player.canGraduate()) {
+                        System.out.println(
+                                "You've graduated! Congratulations on winning the game.");
+                        gameController.endGame();
+                        scanner.close();
+                        return;
+                    }
+
+                    if (player.getFailedExams() > 2) {
+                        player.setGameWon(true);
+                        System.out.println(
+                                "You've failed multiple classes and flunked out. You lose.");
+                        gameController.endGame();
+                        scanner.close();
+                        return;
+                    }
+
+                    // Display menu options
+                    System.out.println("\nMenu Options:");
+                    System.out.println("1. Register and start next course");
+                    System.out.println("2. Check credits");
+                    System.out.println("3. Display registered courses");
+                    System.out.println("4. Use retake exam option");
+                    System.out.println("5. Use drop course option");
+                    System.out.println("6. Display help menu");
+                    System.out.println("7. Clear console");
+                    System.out.println("8. Exit game");
+
+                    System.out.print("Enter your choice: ");
+                    int userChoice = scanner.nextInt();
+                    scanner.nextLine(); // Consume newline
+
+                    switch (userChoice) {
+                    case 1:
+                        start(player); // Register and start next course
+                        break;
+                    case 2:
+                        displayCredits(player); // Check player credits
+                        break;
+                    case 3:
+                        player.displayCourses(); // Display all registered
+                                                 // courses
+                        break;
+                    case 4:
+                        retakeExam(player); // Pass scanner
+                        break;
+                    case 5:
+                        player.dropCourse(); // Pass scanner
+                        break;
+                    case 6:
+                        displayHelpMenu(); // Display help menu
+                        break;
+                    case 7:
+                        clearConsole(); // Clear console
+                        break;
+                    case 8:
+                        gameController.endGame(); // End the game
+                        scanner.close();
+                        return;
+                    default:
+                        System.out.println(
+                                "Invalid choice. Please enter a number from 1 to 8.");
+                        break;
+                    }
+
+                } catch (InputMismatchException e) {
+                    // Handle invalid input gracefully
                     System.out.println(
-                            "Invalid choice. Please try again with a different input."); // Invalid input handling
+                            "Invalid input! Please enter a valid number.");
+                    scanner.nextLine(); // Clear the invalid input
                 }
-
-            } catch (InputMismatchException e) {
-                // Handle invalid input gracefully
-                System.out.println(
-                        "Invalid Input! Please enter only a valid command.");
-                scanner.nextLine(); // Clear the invalid input
             }
         }
     }
