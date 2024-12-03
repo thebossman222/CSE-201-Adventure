@@ -46,13 +46,18 @@ public class Course {
     }
 
     /**
-     * Randomizes the class time to either "8 AM" or "Normal".
+     * get the class time to either "8 AM" or "Normal base on the Professor's difficulty".
      *
      * @return A string representing the randomized class time.
      */
-    private String randomizeClassTime() {
-        return new Random().nextInt(2) == 0 ? "8 AM" : "Normal";
+       private String randomizeClassTime() {
+
+        if (this.professorDifficulty.equalsIgnoreCase("Hard")) {
+            return "8 AM";
+        }
+        return "Normal";
     }
+
     
     public String getName() {
         return this.name;
