@@ -81,7 +81,7 @@ public class Exam {
             System.out.println(
                     "Do you want to drop the class or continue to the next exam?");
             System.out
-                    .println("(Type 'drop' to drop or 'continue' to proceed)");
+                    .println("(Type 'drop' to drop or 'continue' to proceed) \n");
             String choice = scanner.nextLine();
             if (choice.equalsIgnoreCase("drop")) {
                 System.out.println("Class dropped.");
@@ -103,11 +103,14 @@ public class Exam {
 
             // Check if the player has passed based on average score
             if (this.score >= 6) {
-                System.out.println("You have passed the Hard class!");
+                System.out.println("You have passed the" + currentCourse.getName()
+                        + " class!");
                 currentCourse.setPassed(true); // Mark the course as passed
                 return true;
             } else {
-                System.out.println("You have failed the Hard class.");
+                System.out.println(
+                        "You have failed the " + currentCourse.getName()
+                                + " class.");
                 player.incrementFailedExams();
                 return false;
             }
@@ -120,11 +123,15 @@ public class Exam {
 
             // Check if the player has passed
             if (this.score >= 6) {
-                System.out.println("You have passed the Easy class!");
+                System.out.println(
+                        "You have passed the " + currentCourse.getName()
+                                + " class!");
                 currentCourse.setPassed(true); // Mark the course as passed
                 return true;
             } else {
-                System.out.println("You have failed the Easy class.");
+                System.out.println(
+                        "You have failed the " + currentCourse.getName()
+                                + " class.");
                 player.incrementFailedExams();
                 return false;
             }

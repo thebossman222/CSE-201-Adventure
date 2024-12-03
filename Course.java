@@ -2,7 +2,6 @@
 /**
  * @Class: Course
  * @authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
- * @version 1.0
  * @Written: 11/1/2024
  * @Course: CSE 201B: Intro to Software Engineering
  * @Purpose: The Class class represents a course in the MiamiQuest game, 
@@ -46,13 +45,18 @@ public class Course {
     }
 
     /**
-     * Randomizes the class time to either "8 AM" or "Normal".
+     * get the class time to either "8 AM" or "Normal base on the Professor's difficulty".
      *
      * @return A string representing the randomized class time.
      */
-    private String randomizeClassTime() {
-        return new Random().nextInt(2) == 0 ? "8 AM" : "Normal";
+       private String randomizeClassTime() {
+
+        if (this.professorDifficulty.equalsIgnoreCase("Hard")) {
+            return "8 AM";
+        }
+        return "Normal";
     }
+
     
     public String getName() {
         return this.name;
@@ -81,9 +85,9 @@ public class Course {
             case 2:
                 return "Math";
             case 3:
-                return "Sports"; // Corrected from "Sport" to "Sports"
+                return "Sports"; 
             case 4:
-                return "Computer Science"; // Corrected from "CSE" to "Computer Science"
+                return "Computer Science"; 
             default:
                 return "Unknown";
         }

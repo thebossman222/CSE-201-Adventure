@@ -1,7 +1,6 @@
 /**
  * @Class: MiamiQuest
  * @authors: Caleb Krainman, Corbin Fulton, Andy Roberts, Mohamed Lemine E, Marissa Ellis, Ethan Jones
- * @version 2.0
  * @Written: 11/22/2024
  * @Course: CSE 201B: Intro to Software Engineering
  * @Purpose: The MiamiQuest class serves as the main entry point for the 
@@ -69,7 +68,7 @@ public class MiamiQuest {
         System.out.println("Course started with the following characteristics: \n");
         System.out.println(currentClass.displayCourseInfo() + "\n");
 
-        System.out.println("Enter S to take the Exam: ");
+        System.out.print("Enter S to take the Exam: ");
         while (true) {
             String in = sc.nextLine();
             if (in.equalsIgnoreCase("s")) {
